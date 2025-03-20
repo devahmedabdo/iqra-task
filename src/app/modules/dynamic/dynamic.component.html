@@ -1,0 +1,114 @@
+<div class="grid md:grid-cols-2 gap-4">
+  <div class="flex justify-between gap-2 md:col-span-2">
+    <h1 class="text-lg md:text-2xl font-bold">JSON-Driven Form Builder</h1>
+    <btn role="submit" (clicked)="onSubmit()" [disabled]="form.invalid">Submit</btn>
+  </div>
+  <form class="grid md:grid-cols-2 gap-4" [formGroup]="form" (change)="setCashe()">
+    @for (field of json; track $index) {
+         <ng-container *ngTemplateOutlet="field_categorized; context: { field,main:true, form }"></ng-container>
+    }
+  </form>
+  <div class="border-s border-neutral-200 px-3 whitespace-pre">
+    {{form.value | json}}
+  </div>
+</div>
+
+<ng-template #field_categorized let-field="field" let-form="form" let-control="control" let-class="class"
+  let-main="main">
+  <div [formGroup]="form"
+    class="{{['radio','switch','checkbox','group','repeatable'].includes(field.type) && main ? 'md:col-span-2':''}} {{class}}">
+    @if (['select','radio','switch','checkbox','group','repeatable'].includes(field.type) ) {
+        @switch (field.type) {
+            @case ('select') {
+                <sa-control [external]="true" [name]="field.name" [control]="form.controls[field.name]" [lable]="field.label"
+                  [type]="field.type">
+                  <select class="sa-input" [formControlName]="field.name">
+                    @for (option of field.options; track $index) {
+                    <option [value]="option.value">{{ option.label }}</option>
+                    }
+                  </select>
+                </sa-control>
+            }
+            @case ('switch') {
+                <selection name="{{field.name}}" [type]="field.type" [formControlName]="field.name">{{
+                field.label }}</selection>
+            }
+            @case ('checkbox') {
+                <div>
+                  <h4 class="mb-4 font-bold text-lg">{{ field.label }}</h4>
+                  <div class="flex gap-2 flex-wrap">
+                    @for (option of field.options; let i = $index ;track $index) {
+                    <selection type="checkbox" [checked]="form.controls[field.name].value.includes(option.value)"
+                      (change)="onCheckboxChange($event, field.name, option.value, form)">{{
+                      option.label }}</selection>
+                    }
+                  </div>
+                </div>
+            }
+            @case ('radio') {
+                <div>
+                  <h4 class="mb-4 font-bold text-lg">{{ field.label }}</h4>
+                  <div class="flex gap-2 flex-wrap">
+                    @for (option of field.options; track $index) {
+                    <selection name="{{field.name}}" [radio]="option.value" [type]="field.type" [formControlName]="field.name">{{
+                      option.label }}</selection>
+                    }
+                  </div>
+                </div>
+            }
+            @case ('group') {
+                <div>
+                  <h4 class="mb-4 font-bold text-lg">{{ field.label }}</h4>
+                  <div [formGroupName]="field.name">
+                    <div class="grid md:grid-cols-2 gap-4">
+                      @for (subField of field.fields; track $index) {
+                      <sa-control [formControlName]="subField.name" [name]="subField.name" [lable]="subField.label"
+                        [type]="subField.type" [placeholder]="subField.placeholder||''"> </sa-control>
+                      }
+                    </div>
+                  </div>
+                </div>
+            }
+            @case ('repeatable') {
+                <div>
+                  <div class="flex items-center justify-between mb-4">
+                    <h4 class="font-bold text-lg">{{ field.label }}</h4>
+                    @if(!getRepeatableField(field.name).controls.length){
+                    <btn classes="icon w-full" (clicked)="addRepeatableField(field)">
+                      <app-icon icon="plus"></app-icon>
+                    </btn>
+                    }
+                  </div>
+                  <div class="grid md:grid-cols-2 gap-4" [formArrayName]="field.name">
+                    @for (item of getRepeatableField(field.name).controls; track $index) {
+                    <div class="bg-neutral-100 rounded-lg p-2 grid gap-4 pt-4" [formGroup]="item">
+                      @for (sField of field.fields; track $index) {
+
+                      <ng-container
+                        *ngTemplateOutlet="field_categorized; context: { control:item.controls[sField.name], field:sField, form:item ,class:'col-span-1'   }"></ng-container>
+                      }
+                      <div class="flex gap-2">
+                        <btn class="flex-grow" classes="w-full" (clicked)="removeRepeatableField(field.name, $index)">
+                        <app-icon icon="delete"></app-icon>  Delete 
+
+                        </btn>
+                        @if ($last) {
+                        <btn [disabled]="item.invalid" class="flex-grow" classes="orange w-full"
+                          (clicked)="addRepeatableField(field)">
+                          <app-icon icon="plus"></app-icon> Add
+                        </btn>
+                        }
+                      </div>
+                    </div>
+                    }
+                  </div>
+                </div>
+            }
+        }
+    }@else {
+        <sa-control autocomplete="new-{{field.name}}" [required]="field.validations?.required!" [name]="field.name"
+          [control]="form.controls[field.name]" [lable]="field.label" [type]="field.type" [formControlName]="field.name"
+          [placeholder]="field.placeholder||''"></sa-control>
+    }
+  </div>
+</ng-template>

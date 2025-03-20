@@ -1,0 +1,5 @@
+<div class="loading-component flex {{classes}} justify-center items-center gap-2">
+  @for (i of [1,2,3]; track $index) {
+    <div [style]="'--d:'+i" class="bg-orange-800 w-5 h-5 rounded-full top-5 relative"></div>
+  }
+</div>

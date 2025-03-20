@@ -1,0 +1,50 @@
+@import '../public/css/variable.css';
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #535353;
+  border-radius: 8px;
+}
+html {
+  scroll-behavior: smooth;
+}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    ::-webkit-scrollbar {
+      @apply h-2 bg-neutral-200 rounded-full w-2;
+    }
+    ::-webkit-scrollbar-button {
+      @apply hidden;
+    }
+    ::-webkit-scrollbar-thumb {
+      @apply rounded-full bg-neutral-400 hover:bg-neutral-500 active:bg-neutral-600;
+    }
+    body {
+      @apply box-border bg-neutral-50 text-neutral-900;
+      font-family: "Noto Kufi Arabic", sans-serif;
+    }
+    hr {
+      border-color: var(--neutral-200);
+    }
+  }
+}
+@layer utilities {
+  .container {
+    @apply mx-auto px-3;
+    // @media (min-width: 1024px) {
+    //   max-width: 1200px !important;
+    // }
+  }
+}

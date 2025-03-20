@@ -1,0 +1,47 @@
+<div class="sa-control {{extraClass}} flex flex-col gap-2" [ngClass]="{error:errors?.[apiError]}">
+  @if( lable){
+  <label class="flex font-medium gap-2 items-center relative"  [for]="'control'+random">
+    <span [ngClass]="{required:required}">
+      {{lable}}
+    </span>
+    @if( hint){
+      <span class="text-sm text-neutral-500"> ( {{hint}} ) </span>
+    }
+  </label>
+}
+  @if(!external){
+    <div  >
+      <!-- normal input -->
+       @if(type!= 'textarea'){
+         <input [appPhone]="type == 'tel'" class="sa-input" #input [attr.name]="name" [id]="'control'+random" (focus)="focus.emit($event)"
+           [value]="value" [type]="type" (input)="onChange($event)" [min]="min||null" [max]="max||null" (blur)="touched()"
+           [disabled]="disabled" [readonly]="readonly" [required]="required" [autocomplete]="autocomplete"
+           [placeholder]="placeholder || lable || ''" />
+           @if(type=='password'){
+           <button type="button" class="pass-toggle"  
+             (click)="input.type == 'password'?input.type ='text':input.type ='password'">
+             <app-icon [size]="20" icon="{{input.type !=  'password'?'eye':'eye-slash' }}"></app-icon>
+           </button>
+         }
+         @if(extra){
+           <button type="button" class="extra"   (click)="extraClicked.emit(true)">
+             <ng-content select="[slot=extra]"></ng-content>
+           </button>
+         }
+       }@else{
+         <textarea class="sa-input" [rows]="rows" (focus)="focus.emit($event)" [attr.name]="name" [id]="'control'+random"
+           [value]="value || ''" (input)="onChange($event)" (blur)="touched()" [disabled]="disabled" [readonly]="readonly"
+           [required]="required" [autocomplete]="autocomplete" [placeholder]="placeholder || lable || ''"></textarea>
+       }
+      <!-- loading -->
+       @if(controlInput?.pending){
+         <app-loading  classes="h-10 scale-[30%] top-0 absolute end-0"></app-loading>
+       }
+    </div>
+  }
+  @if(external){
+    <ng-content ></ng-content>
+  }
+  <control-error [patternMessage]="patternMessage" [control]="controlInput" [errors]="errors"
+    [apiError]="apiError"></control-error>
+</div>

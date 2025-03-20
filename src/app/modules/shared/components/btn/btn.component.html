@@ -1,0 +1,10 @@
+<button [disabled]="disabled" [type]="role"
+  class="btn {{classes}} {{loading ? '!text-transparent':''}} relative overflow-hidden"
+  (click)="!loading ? clicked.emit() : ''">
+  <ng-content></ng-content>
+  @if(loading){
+  <span class="loading">
+    <app-loading classes="h-10 scale-[30%] invert brightness-0"></app-loading>
+  </span>
+  }
+</button>

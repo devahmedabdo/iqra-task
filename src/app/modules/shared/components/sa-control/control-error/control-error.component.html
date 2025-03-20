@@ -1,0 +1,40 @@
+<ng-container *ngIf="!errors?.[apiError] else apiErrorMessage">
+  <ng-container *ngIf="control?.touched && control?.invalid">
+    <ng-container *ngIf="control?.errors?.['required']">
+      This field is required.
+    </ng-container>
+    <ng-container *ngIf="control?.errors?.email">
+      Invalid email adress !
+    </ng-container>
+    <ng-container *ngIf="control?.errors?.minlength">
+      The length of the field must not be less than :
+      {{control?.errors?.minlength?.requiredLength}}
+    </ng-container>
+    <ng-container *ngIf="control?.errors?.min">
+      Minimum value allowed is :
+      {{control?.errors?.min?.min}}
+    </ng-container>
+    <ng-container *ngIf="control?.errors?.maxlength">
+      The length of the field must not exceed :
+      {{control?.errors?.maxlength?.requiredLength}}
+    </ng-container>
+    <ng-container *ngIf="control?.errors?.dublicated">
+      This email already exist 
+    </ng-container>
+    <ng-container *ngIf="control?.errors?.max">
+      Max value allowed is :
+      {{control?.errors?.max?.max}}
+    </ng-container>
+    <ng-container *ngIf="control?.errors?.pattern && !control?.errors?.minlength">
+      <ng-container *ngIf="patternMessage else defaultPatternMessage">
+        {{patternMessage}}
+      </ng-container>
+      <ng-template #defaultPatternMessage>
+        Please enter value correctly
+      </ng-template>
+    </ng-container>
+  </ng-container>
+</ng-container>
+<ng-template #apiErrorMessage>
+  {{errors[apiError]}}
+</ng-template>

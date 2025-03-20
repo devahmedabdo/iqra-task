@@ -1,0 +1,128 @@
+.sa-control { 
+  label { 
+
+    span {
+      &.required {
+        position: relative;
+
+        &::after {
+          position: absolute;
+          content: "*";
+          color: var(--error-500);
+        }
+
+        & + span {
+          padding-inline-start: 8px;
+        }
+      }
+
+      &.hint {
+        color: var(--neutral-500);
+        font-size: 14px;
+      }
+    }
+  }
+
+  textarea {
+    height: fit-content;
+  }
+
+  > div {
+    position: relative;
+
+    .pass-toggle,
+    .extra {
+      all: unset;
+      inset-inline-end: 0px;
+      padding: 8px;
+      top: 0%;
+      position: absolute;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      box-sizing: border-box;
+      .loading {
+        width: 16px;
+        height: 16px;
+        border: 2px solid;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
+
+    .extra {
+      transition: var(--mid-time);
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--neutral-200);
+    }
+  }
+  .sa-input {
+    appearance: none;
+    outline: 0;
+    font-size: 14px;
+    font-weight: normal;
+    vertical-align: middle;
+    transition: var(--mid-time);
+    padding: 8px 12px;
+    color: var(--neutral-900);
+    height: 40px;
+    background: var(--white);
+    border-radius: var(--radius);
+    width: 100%;
+    border: 1px solid var(--neutral-200);
+
+    &:-webkit-autofill,
+    &:-internal-autofill-selected {
+      -webkit-text-fill-color: var(--neutral-900) !important;
+      box-shadow: inset 0px 0px 0px 40px var(--white) !important;
+    }
+    &[type="number"] {
+      -moz-appearance: textfield;
+    }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &::placeholder {
+      color: var(--neutral-500);
+    }
+
+    &:focus {
+      border-color: var(--orange-500);
+
+      + .extra {
+        border-color: var(--orange-500) !important;
+      }
+    }
+    &:hover {
+      background-color: var(--neutral-50);
+    }
+  }
+  &.error {
+    label span {
+      color: var(--error-500) !important;
+    }
+
+    > div {
+      input,
+      .extra {
+        border-color: var(--error-500);
+      }
+    }
+  }
+}

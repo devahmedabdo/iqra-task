@@ -1,0 +1,9 @@
+<div class="sa-selection {{type}} {{extraClass}}"
+  [style]="'--color:'+'var(--'+color+'-500);--color-of:'+'var(--'+colorOf+');--width:'+sizes[size]+'px;' + '--circle:' + (circle ? '40px':'4px')">
+  <input [ngClass]="{color}" [attr.name]="name" [id]="random + (type === 'radio' ? '-' + radio : '')"
+    [value]="type === 'radio' ? radio : value" [type]="type == 'switch' ? 'checkbox':type " (change)="onChange($event)"
+    (blur)="touched()" [disabled]="disabled" [checked]="type === 'radio' ? (value == radio) :  value||checked " />
+  <label [for]="random + (type === 'radio' ? '-' + radio : '')">
+    <ng-content></ng-content>
+  </label>
+</div>

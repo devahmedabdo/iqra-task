@@ -1,0 +1,10 @@
+.loading-component {
+  > div {
+    animation: upDown 0.5s alternate calc(var(--d) * 0.1s) infinite ease;
+    @keyframes upDown {
+      to {
+        top: -20px;
+      }
+    }
+  }
+}

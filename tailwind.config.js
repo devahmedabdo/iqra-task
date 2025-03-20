@@ -1,0 +1,30 @@
+module.exports = {
+  content: ["src/**/*.{html,ts}"],
+  theme: {
+    extend: {
+      colors: {
+        "primary-50": "var(--primary-50)",
+        "primary-200": "var(--primary-200)",
+        "primary-400": "var(--primary-400)",
+        "primary-500": "var(--primary-500)",
+        "primary-900": "var(--primary-900)",
+        "error-50": "var(--error-50)",
+        "error-500": "var(--error-500)",
+        "error-400": "var(--error-400)",
+        "white": "var(--white)",
+        "neutral-50": "var(--neutral-50)",
+        "neutral-100": "var(--neutral-100)",
+        "neutral-200": "var(--neutral-200)",
+        "neutral-300": "var(--neutral-300)",
+        "neutral-400": "var(--neutral-400)",
+        "neutral-500": "var(--neutral-500)",
+        "neutral-600": "var(--neutral-600)",
+        "neutral-700": "var(--neutral-700)",
+        "neutral-800": "var(--neutral-800)",
+        "neutral-900": "var(--neutral-900)",
+      },
+    },
+  },
+  darkMode: "class",
+  plugins: [],
+};

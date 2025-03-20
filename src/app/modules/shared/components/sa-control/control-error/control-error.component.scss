@@ -1,0 +1,8 @@
+:host {
+  // color: var(--error-500);
+  @apply text-red-500;
+  font-size: 12px;
+  &:empty {
+    display: none;
+  }
+}
