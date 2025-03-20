@@ -61,6 +61,11 @@ export interface Validations {
 ✔ **Implements an async email validator** when `validations` contains `async: 'email'`.
 
 ---
+### You can try one of these email to test async validator
+
+```typescript
+emails = ['test@example.com', 'user@email.com'];
+```
 
 ## 📌 Services and Custom Directives
 - A **service contains the JSON form structure**, providing dynamic field generation.
